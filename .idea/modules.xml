@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FtcUtils.iml" filepath="$PROJECT_DIR$/FtcUtils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ftc-utils/ftc-utils.iml" filepath="$PROJECT_DIR$/ftc-utils/ftc-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FtcUtils/FtcUtils.iml" filepath="$PROJECT_DIR$/FtcUtils/FtcUtils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ftc-utils.iml" filepath="$PROJECT_DIR$/ftc-utils.iml" />
     </modules>
   </component>
 </project>
