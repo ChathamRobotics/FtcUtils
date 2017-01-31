@@ -32,7 +32,6 @@ public abstract class Robot {
     private boolean isTiming;
 
 //    CONSTRUCTORS      //
-
     public Robot(HardwareMap hardwareMap, Telemetry telemetry) {
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;

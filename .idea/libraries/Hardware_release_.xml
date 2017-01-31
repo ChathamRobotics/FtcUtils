@@ -5,8 +5,6 @@
       <root url="file://$PROJECT_DIR$/FtcUtils/build/intermediates/exploded-aar/Hardware-release/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/libs/Hardware-release-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

@@ -5,8 +5,6 @@
       <root url="jar://$PROJECT_DIR$/FtcUtils/build/intermediates/exploded-aar/FtcCommon-release/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/libs/FtcCommon-release-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>
