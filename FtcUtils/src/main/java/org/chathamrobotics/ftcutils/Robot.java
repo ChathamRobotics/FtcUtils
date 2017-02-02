@@ -19,6 +19,7 @@ import java.util.Map;
 
 public abstract class Robot {
 //    CONSTANTS         //
+    public static final long AUTO_START_WAIT_TIME = 10000;
 
 //    TOOLS             //
 
