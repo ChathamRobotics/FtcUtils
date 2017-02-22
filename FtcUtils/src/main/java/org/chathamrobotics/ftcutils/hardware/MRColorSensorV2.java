@@ -125,8 +125,8 @@ public class MRColorSensorV2 extends ModernRoboticsI2cColorSensor implements Col
     }
 
     @Override
-    public synchronized void enableLed(boolean enable) {
-        active = ! active;
+        public synchronized void enableLed(boolean enable) {
+            active = ! active;
 
         super.enableLed(enable);
     }

@@ -46,18 +46,20 @@ public abstract class Robot {
 //    ENUMS         //
 
     public enum Side {
-        FRONT (OmniWheelDriver.FRONT_OFFSET, "Front"),
-        LEFT (OmniWheelDriver.LEFT_OFFSET, "Left"),
-        RIGHT (OmniWheelDriver.RIGHT_OFFSET, "Right"),
-        BACK (OmniWheelDriver.BACK_OFFSET, "Back");
+        FRONT (Math.PI/2,OmniWheelDriver.FRONT_OFFSET, "Front"),
+        LEFT (Math.PI, OmniWheelDriver.LEFT_OFFSET, "Left"),
+        RIGHT (0, OmniWheelDriver.RIGHT_OFFSET, "Right"),
+        BACK (3 * Math.PI / 2, OmniWheelDriver.BACK_OFFSET, "Back");
 
         public double angle;
         public int angleDeg;
+        public double offset;
         public String name;
 
-        Side(double angle, String name) {
+        Side(double angle, double offset, String name) {
             this.angle = angle;
             this.angleDeg = (int)(angle * 180 / Math.PI);
+            this.offset = offset;
 
             this.name = name;
         }
@@ -136,7 +138,7 @@ public abstract class Robot {
      */
     public void log(String line, boolean teleOut, boolean androidOut) {
         // output to telemetry
-        if(teleOut) this.telemetry.addLine(this.TAG + ":" + line);
+        if(teleOut) this.telemetry.addLine("[" + this.TAG + "]: " + line);
 
         // prevent flooding in android logs
         if(line.equals(lastLogLine)) return;
@@ -171,10 +173,10 @@ public abstract class Robot {
 
         if (System.currentTimeMillis() >= timerEndTime) {
             isTiming = false;
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     public boolean isTimerUp() {
