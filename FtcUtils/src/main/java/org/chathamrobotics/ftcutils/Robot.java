@@ -26,7 +26,7 @@ public abstract class Robot {
     protected HardwareMap hardwareMap;
     protected Telemetry telemetry;
     protected Driver driver;
-    protected RobotLog logger;
+    public RobotLog logger;
 
 //    STATEFUL          //
     private String lastLogLine;
