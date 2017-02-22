@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class RobotLog {
     public String tag;
     private Telemetry telemetry;
-    private Level teleLevel;
+    private Level teleLevel = Level.DEBUG;
 
     /**
      * Creates a new instance of RobotLog

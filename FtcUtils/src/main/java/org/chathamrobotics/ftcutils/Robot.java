@@ -26,9 +26,9 @@ public abstract class Robot {
     protected HardwareMap hardwareMap;
     protected Telemetry telemetry;
     protected Driver driver;
+    protected RobotLog logger;
 
 //    STATEFUL          //
-    private String TAG;
     private String lastLogLine;
 
     private long timerEndTime;
@@ -38,7 +38,9 @@ public abstract class Robot {
     public Robot(HardwareMap hardwareMap, Telemetry telemetry) {
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
-        this.TAG = this.getClass().getSimpleName();
+
+        // use the class name for the tag so that if this is extended it matches that name
+        this.logger = new RobotLog(this.getClass().getSimpleName(), telemetry);
 
         this.initHardware();
     }
@@ -83,7 +85,8 @@ public abstract class Robot {
      * This method is used to stop the robot. This should set all motor powers to zero, and do anything else required to stop the robot.
      */
     public void stop() {
-        this.log("Stopping Robot...");
+        this.logger.info("Stopping Robot...");
+//        this.log("Stopping Robot...");
 
         // Stops all the motors. All robots should have this in common
         for (Map.Entry<String, DcMotor> entry : this.hardwareMap.dcMotor.entrySet()) {
@@ -92,32 +95,29 @@ public abstract class Robot {
     }
 
     /**
-     * This method is used to update the telemetry and robot log
-     * @param update    whether or not to update the telemetry
-     * @param teleOut  whether or not to output the data to the telemetry
+     * This method is used to update the telemetry and robot log.
+     *
+     * @param update    whether or not to update telemetry.
+     * @param looping   whether or not in a loop.
      */
-    public void debug(boolean update, boolean teleOut, boolean androidOut) {
+    public void debug(boolean update, boolean looping) {
 
         // Debug motor values
         for (Map.Entry<String, DcMotor> entry : this.hardwareMap.dcMotor.entrySet()) {
-            // if the motor is moving
-//            if(entry.getValue().isBusy()) {}
-
-            log("Motor " + entry.getKey() + " Power",
-                    entry.getValue().getController().getMotorPower(entry.getValue().getPortNumber()), teleOut, androidOut);
+            this.logger.debug("Motor " + entry.getKey() + " Power",
+                    entry.getValue().getController().getMotorPower(entry.getValue().getPortNumber()), looping);
         }
 
         // Debug servo values
         for (Map.Entry<String, Servo> entry: this.hardwareMap.servo.entrySet()) {
-            log("Servo" + entry.getKey() + " Position",
-                    entry.getValue().getController().getServoPosition(entry.getValue().getPortNumber()), teleOut, androidOut);
+            this.logger.debug("Servo" + entry.getKey() + " Position",
+                    entry.getValue().getController().getServoPosition(entry.getValue().getPortNumber()), looping);
         }
 
 
         // Optical Distance sensors
         for (Map.Entry<String, OpticalDistanceSensor> entry: this.hardwareMap.opticalDistanceSensor.entrySet()) {
-            log("ODS " + entry.getKey() + " Light",
-                    entry.getValue().getLightDetected(), teleOut, androidOut);
+            this.logger.debug("ODS " + entry.getKey() + " Light", entry.getValue().getLightDetected(), looping);
         }
 
         // update telemetry values if needed
@@ -125,43 +125,14 @@ public abstract class Robot {
             this.telemetry.update();
         }
     }
+
+    /**
+     * Debugs hardware values
+     */
     public void debug() {
-        debug(true, true, true); // This is here just to make debug easier to call instead of having to do debug(true). If you don't want the telemetry to update when debug is called then do debug(false)
+        debug(true, true); // This is here just to make debug easier to call instead of having to do debug(true). If you don't want the telemetry to update when debug is called then do debug(false)
     }
 
-
-    /**
-     * logs
-     * @param line          the line the output
-     * @param teleOut       whether or not to output to telemetry
-     * @param androidOut    whether or not to output to android facilities
-     */
-    public void log(String line, boolean teleOut, boolean androidOut) {
-        // output to telemetry
-        if(teleOut) this.telemetry.addLine("[" + this.TAG + "]: " + line);
-
-        // prevent flooding in android logs
-        if(line.equals(lastLogLine)) return;
-        else lastLogLine = line;
-
-        // output to android
-        if(androidOut) Log.d(this.TAG, line);
-    }
-    public void log(String line) {log(line, true, true);}
-
-    /**
-     * logs
-     * @param caption       the caption for the message.
-     * @param value         the message
-     * @param teleOut       whether or not to output to the telemetry
-     * @param androidOut    whether or not to output to android
-     */
-    public void log(String caption, Object value, boolean teleOut, boolean androidOut) {
-        log(caption + ": " + value.toString(), teleOut, androidOut);
-    }
-    public void log(String caption, Object value) {
-        log(caption, value, true, true);
-    }
 
     /**
      * waits for given time duration
