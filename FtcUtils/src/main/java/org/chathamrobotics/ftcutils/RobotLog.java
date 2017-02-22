@@ -35,10 +35,10 @@ public class RobotLog {
         DEBUG(5),
         VERBOSE(6);
 
-        public int value;
+        public int priority;
 
-        Level(int value) {
-            this.value = value;
+        Level(int priority) {
+            this.priority = priority;
         }
     }
 
@@ -64,7 +64,7 @@ public class RobotLog {
      * @param looping   whether this is contained in a loop. If it is, the line will not be logged to the log cat facilities.
      */
     public void fatal(String line, boolean looping) {
-        if(! looping) Log.wtf(this.tag, line);
+        logAndroid(Level.FATAL, line, looping);
         logTele(Level.FATAL, line);
     }
 
@@ -122,7 +122,7 @@ public class RobotLog {
      * @param looping   whether this is contained in a loop. If it is, the line will not be logged to the log cat facilities.
      */
     public void error(String line, boolean looping) {
-        if(! looping) Log.e(this.tag, line);
+        logAndroid(Level.ERROR, line, looping);
         logTele(Level.ERROR, line);
     }
 
@@ -180,7 +180,7 @@ public class RobotLog {
      * @param looping   whether this is contained in a loop. If it is, the line will not be logged to the log cat facilities.
      */
     public void warn(String line, boolean looping) {
-        if(! looping) Log.w(this.tag, line);
+        logAndroid(Level.WARN, line, looping);
         logTele(Level.WARN, line);
     }
 
@@ -237,7 +237,7 @@ public class RobotLog {
      * @param looping   whether this is contained in a loop. If it is, the line will not be logged to the log cat facilities.
      */
     public void info(String line, boolean looping) {
-        if(! looping) Log.i(this.tag, line);
+        logAndroid(Level.INFO, line, looping);
         logTele(Level.INFO, line);
     }
 
@@ -283,7 +283,7 @@ public class RobotLog {
      * @param looping   whether this is contained in a loop. If it is, the line will not be logged to the log cat facilities.
      */
     public void debug(String line, boolean looping) {
-        if(! looping) Log.d(this.tag, line);
+        logAndroid(Level.DEBUG, line, looping);
         logTele(Level.DEBUG, line);
     }
 
@@ -329,7 +329,7 @@ public class RobotLog {
      * @param looping   whether this is contained in a loop. If it is, the line will not be logged to the log cat facilities.
      */
     public void verbose(String line, boolean looping) {
-        if(! looping) Log.v(this.tag, line);
+        logAndroid(Level.VERBOSE, line, looping);
         logTele(Level.VERBOSE, line);
     }
 
@@ -374,8 +374,23 @@ public class RobotLog {
      * @param line  the line to log
      */
     private void logTele(Level level, String line) {
-        if (level.value <= this.teleLevel.value) {
+        if (level.priority >= this.teleLevel.priority) {
             telemetry.addData("[" + this.tag + "/" + level.name().toUpperCase() + "]", line);
+        }
+    }
+
+    /**
+     * Logs to androids logging facilities.
+     *
+     * @param level     the level to log at
+     * @param line      the line to log
+     * @param looping   whether logging in a loop
+     */
+    private void logAndroid(Level level, String line, boolean looping) {
+        // the log files flood fast when looping
+        if(! looping) {
+            // logs at the desired level
+            Log.println(level.priority, this.tag, line);
         }
     }
 
