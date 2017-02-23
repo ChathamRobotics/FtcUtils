@@ -27,8 +27,9 @@ public class OmniWheelDriver implements Driver{
     // TODO: 12/11/2016 oz add some comments about this stuff. Also u might want to make is slow public for simplicities sake
     public static double MAX_TURN = .3;
     public static double MAX_SPEED = .7;
-    public static final double SLOW_SPEED = .35;
+    public static final double SLOW_SPEED = .4;
     private boolean isSlow = false;
+    private boolean isDrift = false;
 
     /*
      * The angle used to offset the front of the robot
@@ -287,6 +288,34 @@ public class OmniWheelDriver implements Driver{
     public void toggleSlow() {
         isSlow = !isSlow;
     }
+
+
+    public boolean isDriftModeOn(){
+        return isDrift;
+    }
+
+    public void setDriftMode(boolean isOn){
+        isDrift = isOn;
+        if (isDrift) {
+            frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        } else {
+            frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
+
+    }
+
+
+    public void toggleDriftMode(){
+        isDrift = !isDrift;
+        setDriftMode(isDrift);
+    }
+
 
     /*
      * moves the robot in the direction specified
