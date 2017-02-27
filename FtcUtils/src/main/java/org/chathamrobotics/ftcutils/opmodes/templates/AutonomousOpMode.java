@@ -64,8 +64,8 @@ public abstract class  AutonomousOpMode extends LinearOpMode {
         }
         catch (StoppedException error) {
             //Just continue to robot stop
-        }
-        finally {
+            }
+            finally {
             this.robot().debug();
             stopRobot();
         }
@@ -75,7 +75,7 @@ public abstract class  AutonomousOpMode extends LinearOpMode {
      * periodically checks for stop and updates telemetry
      */
     protected void statusCheck() throws StoppedException {
-        this.robot().debug(true, true, false);
+        this.robot().debug();
         checkForStop();
     }
 
