@@ -30,11 +30,12 @@ public class OmniWheelDriver implements Driver{
     public static final double SLOW_SPEED = .4;
     private boolean isSlow = false;
     private boolean isDrift = false;
+    private boolean fastMode = false;
 
     /*
      * The angle used to offset the front of the robot
      */
-    public double offsetAngle;
+    public double offsetAngle, directionAngle;
 
     /*
      * Whether or not to log telemetry data
@@ -121,12 +122,12 @@ public class OmniWheelDriver implements Driver{
          */
 
         if (smooth) {
-            MAX_TURN = Math.abs(rotate) * this.MAX_TURN;
+            MAX_TURN = Math.abs(rotate) * OmniWheelDriver.MAX_TURN;
             MAX_SPEED = 1 - MAX_TURN;
 
         } else {
-            MAX_SPEED = this.MAX_SPEED;
-            MAX_TURN = this.MAX_TURN;
+            MAX_SPEED = OmniWheelDriver.MAX_SPEED;
+            MAX_TURN = OmniWheelDriver.MAX_TURN;
         }
 
         //Using a function on variable rotate will smooth out the slow values but still give full range
@@ -164,7 +165,7 @@ public class OmniWheelDriver implements Driver{
         r = Math.sqrt( (x*x) + (y*y) );
         if(r>1) r=1;
 
-        angle += (Math.PI/4);//take our angle and shift it 90 deg (PI/4)
+        angle += (Math.PI/4) + offsetAngle + directionAngle;//take our angle and shift it 90 deg (PI/4)
 
         if(smooth || isSlow) r = r*r; //Using a function on variable r will smooth out the slow values but still give full range
 
@@ -179,8 +180,11 @@ public class OmniWheelDriver implements Driver{
         /* Takes new angle and radius and converts them into the motor values
          * Multiples by our speed reduction ratio and our slow speed ratio
          */
-        FL = BR = Math.sin(angle + offsetAngle) * MAX_SPEED * r;
-        FR = BL = Math.cos(angle + offsetAngle) * MAX_SPEED * r ;
+
+        double fastSpeed = fastMode ? Math.sqrt(2) : 1;
+
+        FL = BR = Math.sin(angle) * MAX_SPEED * r * fastSpeed;
+        FR = BL = Math.cos(angle) * MAX_SPEED * r * fastSpeed;
 
         FL -= rotate; // implements rotation
         FR -= rotate;
@@ -195,6 +199,21 @@ public class OmniWheelDriver implements Driver{
         frontRight.setPower( Range.clip(FR * SPEED, -1, 1)); // -
         backLeft.setPower( Range.clip(-BL * SPEED, -1, 1)); // +
         backRight.setPower( Range.clip(-BR * SPEED, -1, 1)); //+
+
+
+
+        /*
+        * Will drive in aproxamite direction if true
+
+        if(Math.abs(FL) >1 || Math.abs(FR) >1 ||
+                Math.abs(BR) >1 || Math.abs(BL) >1) {
+
+            FL /=  Math.abs(FL);
+            FR /=  Math.abs(FR);
+            BR /=  Math.abs(BR);
+            BL /=  Math.abs(BL);
+        }
+         */
 
 
         if (silent) {
@@ -316,6 +335,10 @@ public class OmniWheelDriver implements Driver{
         setDriftMode(isDrift);
     }
 
+    public void setFastMode(boolean isOn){
+        fastMode = isOn;
+    }
+
 
     /*
      * moves the robot in the direction specified
@@ -361,6 +384,10 @@ public class OmniWheelDriver implements Driver{
      */
     public void setOffsetAngle(double angle) {
         offsetAngle = angle;
+    }
+
+    public void setDirectionAngle(double angle){
+        directionAngle = angle;
     }
 
     /*

@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 @TeleOp(name = "Servo Debugger")
-@Disabled
+//@Disabled
 
 public class ServoDebug extends OpMode {
 
@@ -42,16 +42,16 @@ public class ServoDebug extends OpMode {
     @Override
     public void loop() {
 
-        if(gamepad1.a && gamepad1.a != prevA) servo++;
+        if(gamepad1.a && !prevA) servo++;
         prevA = gamepad1.a;
 
-        if(servo == 7) servo=1;
+        if(servo == 7) servo = 1;
 
 
-        if(gamepad1.dpad_down && gamepad1.dpad_down != prevDPD && servoPosition >= 0) servoPosition -= increment;
+        if(gamepad1.dpad_down && !prevDPD && servoPosition - increment> 0) servoPosition -= increment;
         prevDPD = gamepad1.dpad_down;
 
-        if(gamepad1.dpad_up && gamepad1.dpad_up != prevDPU && servoPosition <= 1) servoPosition += increment;
+        if(gamepad1.dpad_up && !prevDPU && servoPosition + increment < 1) servoPosition += increment;
         prevDPU = gamepad1.dpad_up;
 
 
