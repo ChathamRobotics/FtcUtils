@@ -4,22 +4,40 @@ import android.util.Log;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/*!
+ * ftc-utils
+ * Copyright (c) 2017 Chatham Robotics
+ * MIT License
+ * @Last Modified by: Carson Storm
+ * @Last Modified time: 5/26/2017
+ */
+
 /**
  * Handles logging for the robot
  */
-
-public class RobotLog {
+public class RobotLogger {
+    /**
+     * The tag the logger is using.
+     */
     public String tag;
+
+    /**
+     * The telemetry object to write data to.
+     */
     private Telemetry telemetry;
+
+    /**
+     * The current log level of the telemetry.
+     */
     private Level teleLevel = Level.DEBUG;
 
     /**
-     * Creates a new instance of RobotLog
+     * Creates a new instance of RobotLogger
      *
      * @param tag       the tag to use for all the logs
      * @param telemetry the opmodes telemetry
      */
-    public RobotLog(String tag, Telemetry telemetry) {
+    public RobotLogger(String tag, Telemetry telemetry) {
         this.tag = tag;
         this.telemetry = telemetry;
     }
@@ -70,7 +88,7 @@ public class RobotLog {
 
     /**
      * Logs at the fatal level. Assumes not in loop.
-     * @see RobotLog#fatal(String, boolean)
+     * @see RobotLogger#fatal(String, boolean)
      *
      * @param line the line to log.
      */
@@ -80,7 +98,7 @@ public class RobotLog {
 
     /**
      * Logs a exception at the fatal level. Assumes not in loop.
-     * @see RobotLog#fatal(String, boolean)
+     * @see RobotLogger#fatal(String, boolean)
      *
      * @param line  the line to log.
      * @param tr    the exception to log.
@@ -92,7 +110,7 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the fatal level.
-     * @see RobotLog#fatal(String, boolean)
+     * @see RobotLogger#fatal(String, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.
@@ -104,8 +122,8 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the fatal level. Assumes not in loop.
-     * @see RobotLog#fatal(String, boolean)
-     * @see RobotLog#fatal(String, Object, boolean)
+     * @see RobotLogger#fatal(String, boolean)
+     * @see RobotLogger#fatal(String, Object, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.
@@ -128,7 +146,7 @@ public class RobotLog {
 
     /**
      * Logs at the error level. Assumes not in loop.
-     * @see RobotLog#error(String, boolean)
+     * @see RobotLogger#error(String, boolean)
      *
      * @param line  the line to log.
      */
@@ -138,7 +156,7 @@ public class RobotLog {
 
     /**
      * Logs a exception at the error level. Assumes not in loop.
-     * @see RobotLog#error(String, boolean)
+     * @see RobotLogger#error(String, boolean)
      *
      * @param line  the line to log.
      * @param tr    the exception to log.
@@ -150,7 +168,7 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the error level.
-     * @see RobotLog#error(String, boolean)
+     * @see RobotLogger#error(String, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.
@@ -162,8 +180,8 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the error level. Assumes not in loop.
-     * @see RobotLog#error(String, boolean)
-     * @see RobotLog#error(String, Object, boolean)
+     * @see RobotLogger#error(String, boolean)
+     * @see RobotLogger#error(String, Object, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.
@@ -186,7 +204,7 @@ public class RobotLog {
 
     /**
      * Logs at the warning level. Assumes not in loop.
-     * @see RobotLog#warn(String, boolean)
+     * @see RobotLogger#warn(String, boolean)
      *
      * @param line  the line to log.
      */
@@ -196,7 +214,7 @@ public class RobotLog {
 
     /**
      * Logs a exception at the warning level. Assumes not in loop.
-     * @see RobotLog#warn(String, boolean)
+     * @see RobotLogger#warn(String, boolean)
      *
      * @param line  the line to log.
      * @param tr    the exception to log.
@@ -208,7 +226,7 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the warning level.
-     * @see RobotLog#warn(String, boolean)
+     * @see RobotLogger#warn(String, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.
@@ -220,8 +238,8 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the warning level. Assumes not in loop.
-     * @see RobotLog#warn(String, boolean)
-     * @see RobotLog#warn(String, Object, boolean)
+     * @see RobotLogger#warn(String, boolean)
+     * @see RobotLogger#warn(String, Object, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.
@@ -243,7 +261,7 @@ public class RobotLog {
 
     /**
      * Logs at the info level. Assumes not in loop.
-     * @see RobotLog#info(String, boolean)
+     * @see RobotLogger#info(String, boolean)
      *
      * @param line  the line to log.
      */
@@ -253,7 +271,7 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the info level.
-     * @see RobotLog#debug(String, boolean)
+     * @see RobotLogger#debug(String, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.
@@ -265,8 +283,8 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the info level. Assumes not in loop.
-     * @see RobotLog#debug(String, boolean)
-     * @see RobotLog#debug(String, Object, boolean)
+     * @see RobotLogger#debug(String, boolean)
+     * @see RobotLogger#debug(String, Object, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.
@@ -289,7 +307,7 @@ public class RobotLog {
 
     /**
      * Logs at the debug level. Assumes that not in loop.
-     * @see RobotLog#debug(String, boolean)
+     * @see RobotLogger#debug(String, boolean)
      *
      * @param line  the line to log.
      */
@@ -299,7 +317,7 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the debug level.
-     * @see RobotLog#debug(String, boolean)
+     * @see RobotLogger#debug(String, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.
@@ -311,8 +329,8 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the debug level. Assumes not in loop.
-     * @see RobotLog#debug(String, boolean)
-     * @see RobotLog#debug(String, Object, boolean)
+     * @see RobotLogger#debug(String, boolean)
+     * @see RobotLogger#debug(String, Object, boolean)
      *
      * @param caption   the values caption.
      * @param value     the value to log.
@@ -335,7 +353,7 @@ public class RobotLog {
 
     /**
      * logs at the verbose level. Assumes not in loop.
-     * @see RobotLog#verbose(String, boolean)
+     * @see RobotLogger#verbose(String, boolean)
      *
      * @param line      the line to log.
      */
@@ -345,7 +363,7 @@ public class RobotLog {
 
     /**
      * Formats the line as "{caption}: {value}" and logs at the verbose level.
-     * @see RobotLog#verbose(String, boolean)
+     * @see RobotLogger#verbose(String, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.
@@ -357,8 +375,8 @@ public class RobotLog {
 
     /**
      * formats the line as "{caption}: {value}" and logs at the verbose level. Assumes not in loop.
-     * @see RobotLog#verbose(String, boolean)
-     * @see RobotLog#verbose(String, Object, boolean)
+     * @see RobotLogger#verbose(String, boolean)
+     * @see RobotLogger#verbose(String, Object, boolean)
      *
      * @param caption   the caption for the value.
      * @param value     the value to log.

@@ -1,18 +1,28 @@
 package org.chathamrobotics.ftcutils;
 
-/**
- * Created by storm on 1/22/2017.
+/*!
+ * ftc-utils
+ * Copyright (c) 2017 Chatham Robotics
+ * MIT License
+ * @Last Modified by: Carson Storm
+ * @Last Modified time: 5/26/2017
  */
 
+/**
+ * A collection of methods for ballistics calculations.
+ */
 public final class Ballistics {
+    /**
+     * The acceleration of gravity on earth.
+     */
     public static final double GRAVITY_ACCELERATION = 9.81;
 
     /**
-     * find the required velocity to fire a projectile at a target
-     * @param distance  the horizontal displacement
-     * @param height    the vertical displacement
-     * @param fireAngle the angle the project is being fired at
-     * @return          the required velocity
+     * Finds the required velocity in order fire a projectile at a given target.
+     * @param distance  The horizontal displacement to the target.
+     * @param height    The vertical displacement to the target.
+     * @param fireAngle The angle the project is being fired at.
+     * @return          The required velocity.
      */
     public double requiredVelocity(double distance, double height, double fireAngle) {
         return (distance * GRAVITY_ACCELERATION) /
